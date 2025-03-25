@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include "PLLw.h"
 #include "GPIOw.h"
+#include "CANw.h"
 #include "Delayw.h"
 #include "tm4c123gh6pm.h"
 
@@ -29,11 +30,59 @@ void C_general(void);
  */
 int32_t main(void)
 {
+    uint8_t cs1 = 0U;
+    uint8_t cs2 = 0U;
     C_general();
+    can_control_t can_c_local_t=
+    {
+        .i_CMD = 0U,
+        .rxdatos = {0U},
+        .txdatos = {0U},
+        .tx_id_s1 = 0x101U,
+        .tx_id_s2 = 0x102U,
+        .rx_id = 0x100U,
+        .rx_obj = 3U,
+        .tx_s1_obj = 1U,
+        .tx_s2_obj = 2U,
+        .tx_rep =  1U,
+        .ini_padding = 1U
+    };
+
+    CAN0_Setmsg(can_c_local_t.tx_id_s1, can_c_local_t.tx_s1_obj);
+    CAN0_Setmsg(can_c_local_t.tx_id_s2, can_c_local_t.tx_s2_obj);
+    CAN0_Setrecept(can_c_local_t.rx_id, can_c_local_t.rx_obj);
+
     while(1U)
     {
-        GPIO_PORTF_DATA_R ^= 0X02;
-        Delay_ms(100);
+        if((GPIO_PORTF_DATA_R & 0x01U) == 0U)
+        {
+            can_c_local_t.txdatos[0U] = cs1 + 1U;
+            CAN0_Transmit(can_c_local_t.txdatos,can_c_local_t.tx_rep, can_c_local_t.tx_s1_obj);
+            Delay_ms(10U);
+            CAN0_Reception(can_c_local_t.rxdatos,can_c_local_t.rx_obj);
+            Delay_ms(500U);
+            while((GPIO_PORTF_DATA_R & 0x01U) == 0U) {}
+            Delay_ms(50U);
+            cs1++;
+            if(cs1 >= 4U)
+            {
+                cs1 = 0U;
+            }
+        }
+        if((GPIO_PORTF_DATA_R & 0x10U) == 0U)
+        {
+            can_c_local_t.txdatos[0U] = cs2 + 1U;
+            CAN0_Transmit(can_c_local_t.txdatos,can_c_local_t.tx_rep, can_c_local_t.tx_s2_obj);
+            CAN0_Reception(can_c_local_t.rxdatos,can_c_local_t.rx_obj);
+            Delay_ms(500U);
+            while((GPIO_PORTF_DATA_R & 0x10U) == 0U) {}
+            Delay_ms(50U);
+            cs2++;
+            if(cs2 >= 4U)
+            {
+                cs2 = 0U;
+            }
+        }
     }
 }
 /**
@@ -43,4 +92,5 @@ void C_general(void)
 {
     PLL_Init();
     GPIOF_Init();
+    CAN0_Init();
 }
