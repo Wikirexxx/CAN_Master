@@ -39,11 +39,11 @@ Tras presionar alguno de los botones se incia la transmisión con uno de los esc
 | `i_CMD`        | `uint8_t`        | Identificador de comando CAN.                                            |
 | `rxdatos[]`    | `uint8_t[]`      | Buffer de recepción de datos CAN.                                        |
 | `txdatos[]`    | `uint8_t[]`      | Buffer de transmisión de datos CAN.                                      |
-| `tx_id_s1`     | `const uint32_t` | ID estándar de transmisión para sensor 1.                                |
-| `tx_id_s2`     | `const uint32_t` | ID estándar de transmisión para sensor 2.                                |
+| `tx_id_s1`     | `const uint32_t` | ID estándar de transmisión para esclavo 1.                                |
+| `tx_id_s2`     | `const uint32_t` | ID estándar de transmisión para esclavo 2.                                |
 | `rx_id`        | `const uint32_t` | ID estándar de recepción.                                                |
 | `rx_obj`       | `uint32_t`       | Número de objeto de mensaje usado para recepción.                        |
-| `tx_s1_obj`    | `uint32_t`       | Objeto de mensaje usado para enviar datos desde sensor 1.                |
-| `tx_s2_obj`    | `uint32_t`       | Objeto de mensaje usado para enviar datos desde sensor 2.                |
+| `tx_s1_obj`    | `uint32_t`       | Objeto de mensaje usado para enviar datos desde esclavo 1.                |
+| `tx_s2_obj`    | `uint32_t`       | Objeto de mensaje usado para enviar datos desde esclavo 2.                |
 | `tx_rep`       | `uint32_t`       | Número de repeticiones para envío (útil para pruebas o robustez).        |
-| `ini_padding`  | `uint8_t`        | Padding opcional para separación/inicialización.                         |
+| `ini_padding`  | `uint8_t`        | inicio dePadding opcional para relleno.                         |
