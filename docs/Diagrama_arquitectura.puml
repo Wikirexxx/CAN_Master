@@ -1,32 +1,52 @@
 @startuml Arquitectura
+title Arquitectura de Firmware - Comunicación CAN Maestro-Esclavos
 
-package "Some Group" {
-  HTTP - [First Component]
-  [Another Component]
+actor "Usuario" as U
+
+package "Sistema completo" {
+    node "Maestro\n(ID: 0x100)" as M {
+        component "Firmware Maestro" as FW_M
+    }
+
+    node "Esclavo 1\n(ID: 0x101)" as S1 {
+        component "Firmware Esclavo 1" as FW_S1
+    }
+
+    node "Esclavo 2\n(ID: 0x102)" as S2 {
+        component "Firmware Esclavo 2" as FW_S2
+    }
 }
 
-node "Other Groups" {
-  FTP - [Second Component]
-  [First Component] --> FTP
-}
+U --> FW_M : Instrucciones (b1 y b2) / Entrada
 
-cloud {
-  [Example 1]
-}
+FW_M --> FW_S1 : Trama CAN (ID: 0x101)\nDatos/Comandos
+FW_S1 --> FW_M : Trama CAN (ID: 0x100)\nRespuesta/Datos
 
+FW_M --> FW_S2 : Trama CAN (ID: 0x102)\nDatos/Comandos
+FW_S2 --> FW_M : Trama CAN (ID: 0x100)\nRespuesta/Datos
 
-database "MySql" {
-  folder "This is my folder" {
-    [Folder 3]
-  }
-  frame "Foo" {
-    [Frame 4]
-  }
-}
+note bottom of FW_M
+  - Interpreta comandos del usuario
+  - Envía datos por CAN a esclavos
+  - Recibe respuestas y actualiza estado
+end note
 
+note bottom of FW_S1
+  - Procesa datos recibidos
+  - Ejecuta acciones locales
+  - Responde por CAN al maestro
+end note
 
-[Another Component] --> [Example 1]
-[Example 1] --> [Folder 3]
-[Folder 3] --> [Frame 4]
+note bottom of FW_S2
+  - Procesa datos recibidos
+  - Ejecuta acciones locales
+  - Responde por CAN al maestro
+end note
+
+note bottom of "Sistema completo"
+  La comunicación CAN se realiza 
+  por los pines físicos:
+  PB4 (CAN0RX) y PB5 (CAN0TX)
+end note
 
 @enduml

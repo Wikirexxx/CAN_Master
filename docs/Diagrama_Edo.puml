@@ -1,22 +1,18 @@
-@startuml Diagrama de estados
-scale 350 width
-[*] --> NotShooting
+@startuml Edo general
+title Máquina de Estados - Control por Botones con CAN
 
-state NotShooting {
-  [*] --> Idle
-  Idle --> Configuring : EvConfig
-  Configuring --> Idle : EvConfig
-}
+[*] --> IDLE : Inicio
 
-state Configuring {
-  [*] --> NewValueSelection
-  NewValueSelection --> NewValuePreview : EvNewValue
-  NewValuePreview --> NewValueSelection : EvNewValueRejected
-  NewValuePreview --> NewValueSelection : EvNewValueSaved
+IDLE --> BUTTON1_PRESSED : Botón PF0 presionado (GPIO_PORTF_DATA_R & 0x01U == 0)
+IDLE --> BUTTON2_PRESSED : Botón PF4 presionado (GPIO_PORTF_DATA_R & 0x10U == 0)
 
-  state NewValuePreview {
-     State1 -> State2
-  }
+BUTTON1_PRESSED --> TX_AND_RX : Transmitir por tx_s1_obj\nEncender LED_azul
+BUTTON2_PRESSED --> TX_AND_RX : Transmitir por tx_s2_obj\nEncender LED_azul
 
-}
+TX_AND_RX --> LED_HOLD : Recibir CAN\nDelay 500ms
+
+LED_HOLD --> LED_HOLD : Mientras botón siga presionado\nEncender LED_rojo
+LED_HOLD --> UPDATE_COUNTER : Botón liberado\nDelay 50ms
+
+UPDATE_COUNTER --> IDLE : Actualizar cs1 o cs2\nVerificar si >= 4\nReiniciar si es necesario
 @enduml
