@@ -56,12 +56,16 @@ int32_t main(void)
     {
         if((GPIO_PORTF_DATA_R & 0x01U) == 0U)
         {
+            write_portf(Led_azul);
             can_c_local_t.txdatos[0U] = cs1 + 1U;
             CAN0_Transmit(can_c_local_t.txdatos,can_c_local_t.tx_rep, can_c_local_t.tx_s1_obj);
             Delay_ms(10U);
             CAN0_Reception(can_c_local_t.rxdatos,can_c_local_t.rx_obj);
             Delay_ms(500U);
-            while((GPIO_PORTF_DATA_R & 0x01U) == 0U) {}
+            while((GPIO_PORTF_DATA_R & 0x01U) == 0U) 
+            {
+                write_portf(Led_rojo);
+            }
             Delay_ms(50U);
             cs1++;
             if(cs1 >= 4U)
@@ -71,11 +75,15 @@ int32_t main(void)
         }
         if((GPIO_PORTF_DATA_R & 0x10U) == 0U)
         {
+            write_portf(Led_azul);
             can_c_local_t.txdatos[0U] = cs2 + 1U;
             CAN0_Transmit(can_c_local_t.txdatos,can_c_local_t.tx_rep, can_c_local_t.tx_s2_obj);
             CAN0_Reception(can_c_local_t.rxdatos,can_c_local_t.rx_obj);
             Delay_ms(500U);
-            while((GPIO_PORTF_DATA_R & 0x10U) == 0U) {}
+            while((GPIO_PORTF_DATA_R & 0x10U) == 0U) 
+            {
+                write_portf(Led_rojo);
+            }
             Delay_ms(50U);
             cs2++;
             if(cs2 >= 4U)
