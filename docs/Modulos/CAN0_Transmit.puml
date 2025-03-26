@@ -1,0 +1,31 @@
+@startuml TransmitirCAN
+title Diagrama de Actividad - CAN0_Transmit
+
+start
+
+:Verificar que el número de objeto esté en rango válido;
+
+if (Objeto inválido) then (sí)
+  :Entrar en bucle infinito para evitar fallo;
+  stop
+else (no)
+  :Calcular la máscara de objeto;
+endif
+
+repeat
+  :Esperar que el buffer IF1 esté libre;
+
+  :Cargar los 8 bytes de datos al buffer IF1\n(en segmentos de 2 bytes);
+
+  :Configurar la solicitud de transmisión (TXRQST);
+
+  :Iniciar la transferencia de datos al objeto de mensaje;
+
+  repeat
+    :Esperar a que la transmisión se complete en el bus CAN;
+  repeat while (Mensaje no ha sido transmitido)
+
+repeat while (Aún hay repeticiones)
+
+stop
+@enduml

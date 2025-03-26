@@ -1,0 +1,26 @@
+@startuml RecepcionCAN
+title Diagrama de Actividad - CAN0_Reception
+
+start
+
+:Verificar que el número de objeto esté en rango válido;
+
+if (Objeto inválido) then (sí)
+  :Entrar en bucle infinito para evitar fallo;
+  stop
+else (no)
+  :Calcular máscara del objeto;
+endif
+
+:Esperar hasta que el objeto tenga un nuevo mensaje disponible (NEW DATA);
+
+:Esperar que el buffer IF2 esté libre;
+
+:Solicitar la lectura del mensaje desde el objeto CAN hacia el buffer IF2;
+
+:Esperar a que se complete la lectura desde el objeto;
+
+:Extraer los 8 bytes de datos recibidos y almacenarlos en el arreglo de recepción;
+
+stop
+@enduml

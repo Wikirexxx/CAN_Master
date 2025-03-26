@@ -1,0 +1,27 @@
+@startuml Configuracion_RX
+title Diagrama de Actividad - CAN0_Setrecept (Recepción CAN)
+
+start
+
+:Esperar que el buffer IF2 esté libre;
+
+repeat
+  :Verificar si IF2 está ocupado;
+repeat while (IF2 ocupado)
+
+:Configurar máscara para coincidencia exacta de ID estándar (11 bits);
+
+:Establecer identificador de recepción (ID estándar)\ncon parámetros: RX, XTD=0, MSGVAL=1;
+
+:Configurar control del mensaje:\nDLC=8, UMASK=1, EOB=1;
+
+:Seleccionar campos a transferir:\n(Máscara, Árbitro, Control);
+
+:Transferir configuración al objeto de mensaje;
+
+repeat
+  :Esperar finalización de la transferencia;
+repeat while (transferencia en curso)
+
+stop
+@enduml

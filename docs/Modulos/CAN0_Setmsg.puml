@@ -1,0 +1,27 @@
+@startuml Configuracion
+title Diagrama de Actividad - CAN0_Setmsg
+
+start
+
+:Esperar que el buffer IF1 esté libre;
+
+repeat
+  :Verificar si IF1 está ocupado;
+repeat while (IF1 está ocupado)
+
+:Limpiar el registro del buffer IF1;
+
+:Configurar el identificador estándar para transmisión;
+
+:Establecer parámetros de control del mensaje\n(tamaño de datos, fin de mensaje);
+
+:Seleccionar qué campos serán escritos al buffer\n(árbitro, control);
+
+:Asignar el número de objeto de mensaje para transmitir;
+
+repeat
+  :Esperar que la configuración se transfiera al objeto;
+repeat while (transferencia en curso)
+
+stop
+@enduml
