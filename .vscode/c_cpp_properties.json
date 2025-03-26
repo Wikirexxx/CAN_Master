@@ -1,0 +1,20 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "TM4C123GH6PM Bare Metal",
+            "includePath": [
+                "${workspaceFolder}/**",                // Incluye todo el proyecto
+                "${workspaceFolder}/Inc",               // Ruta a los encabezados de tu proyecto
+                "${workspaceFolder}/drivers"
+            ],
+            "defines": [
+                "TM4C123GH6PM"                        // Define el microcontrolador
+            ],
+            "cStandard": "c99",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm",                  // Configura IntelliSense para GCC ARM
+            "compilerPath": "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/bin/arm-none-eabi-gcc.exe"
+        }
+    ]
+}

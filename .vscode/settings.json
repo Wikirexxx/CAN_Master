@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "tm4c123gh6pm.h": "c",
+        "canw.h": "c",
+        "stdint.h": "c",
+        "adcw.h": "c",
+        "gpiow.h": "c",
+        "pllw.h": "c",
+        "delayw.h": "c"
+    }
+}

@@ -1,0 +1,54 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "msbuild",
+            "args": [
+                "/property:GenerateFullPaths=true",
+                "/t:build",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Cppcheck Analysis",
+            "type": "shell",
+            "command": "cppcheck",
+            "args": [
+                "--enable=all",
+                "--inconclusive",
+                "--quiet",
+                "--std=c99",
+                "--suppress=missingIncludeSystem",
+                "--force",
+                "--template=gcc",
+                "--checkers-report=${workspaceFolder}/cppcheck_rules.txt",   
+                "--output-file=${workspaceFolder}/cppcheck_report.txt",
+                "-I", "${workspaceFolder}/Inc",
+                "-I", "${workspaceFolder}/drivers",
+                "${workspaceFolder}/src"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": {
+                "fileLocation": "absolute",
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        }
+    ]
+}

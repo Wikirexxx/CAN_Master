@@ -1,8 +1,6 @@
 # Ignorar carpeta de compilación
 build/
 
-# Ignorar carpeta de código de arranque
-startup/
 
 # Ignorar carpeta generada por Doxygen
 docs/Doxyfolder/
@@ -10,5 +8,3 @@ docs/Doxyfolder/
 # (Opcional) Ignorar archivos generados por cscope
 cscope.out
 
-# (Opcional) Ignorar configuración de VSCode (si es personal)
-.vscode/
