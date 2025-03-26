@@ -32,12 +32,12 @@ int32_t main(void)
     C_general();
     while(1U)
     {
-        GPIO_PORTF_DATA_R = 0X02;
-        Delay_ms(100);
-        GPIO_PORTF_DATA_R = 0X04;
-        Delay_ms(100);
-        GPIO_PORTF_DATA_R = 0X08;
-        Delay_ms(100);
+        write_portf(Led_rojo);
+        Delay_ms(500);
+        write_portf(Led_azul);
+        Delay_ms(500);
+        write_portf(Led_verde);
+        Delay_ms(500);
     }
 }
 /**
