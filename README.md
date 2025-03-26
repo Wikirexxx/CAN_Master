@@ -1,4 +1,4 @@
-## 🚀  [TM4C123GH6PM] - [CAN0 - Configuración para comunicación CAN como esclavo]
+## 🚀  [TM4C123GH6PM] - [CAN0 - Configuración para comunicación CAN ]
 Este proyecto tiene como objetivo configurar el microcontrolador TM4C123GH6PM para comunicación CAN como maestro, se configura el microcontrolador para enviar mensajes CAN y se envía un mensaje de respuesta. Además se agregan dos botones para la selcción del esclavo al que se le enviará mensaje.
 
 ## Consideraciones de firmware.
